@@ -183,7 +183,7 @@ public class AuthRestAPIs {
                 user.setEmail(changeProfile.getEmail());
                 userService.save(user);
                 writer.close();
-            return new ResponseEntity(new ResponseMessage("yes"), HttpStatus.OK);
+            return new ResponseEntity(user, HttpStatus.OK);
 
         } catch (UsernameNotFoundException exception) {
             return new ResponseEntity<>(new ResponseMessage("excetion"), HttpStatus.OK);
