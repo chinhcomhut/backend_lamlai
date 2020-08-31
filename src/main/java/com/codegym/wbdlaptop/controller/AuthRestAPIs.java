@@ -186,7 +186,7 @@ public class AuthRestAPIs {
             return new ResponseEntity(new ResponseMessage("yes"), HttpStatus.OK);
 
         } catch (UsernameNotFoundException exception) {
-            return new ResponseEntity<>(new ResponseMessage(exception.getMessage()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseMessage("excetion"), HttpStatus.OK);
         }
 
     }
