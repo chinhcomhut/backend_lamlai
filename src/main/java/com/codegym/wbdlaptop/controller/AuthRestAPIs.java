@@ -1,8 +1,6 @@
 package com.codegym.wbdlaptop.controller;
 
-import com.codegym.wbdlaptop.message.request.ChangePasswordForm;
-import com.codegym.wbdlaptop.message.request.LoginForm;
-import com.codegym.wbdlaptop.message.request.SignUpForm;
+import com.codegym.wbdlaptop.message.request.*;
 import com.codegym.wbdlaptop.message.response.JwtResponse;
 import com.codegym.wbdlaptop.message.response.ResponseMessage;
 import com.codegym.wbdlaptop.model.Role;
@@ -137,6 +135,50 @@ public class AuthRestAPIs {
             return new ResponseEntity<>(new ResponseMessage(exception.getMessage()), HttpStatus.NOT_FOUND);
         }
 
+
+    }
+    @PutMapping("/change-avatar")
+    public ResponseEntity<?> changeAvatar(HttpServletRequest httpServletRequest, @Valid @RequestBody ChangeAvatar changeAvatar){
+        String jwt = jwtAuthTokenFilter.getJwt(httpServletRequest);
+        String username = jwtProvider.getUserNameFromJwtToken(jwt);
+        User user;
+        try {
+            if(changeAvatar.getAvatar()==null){
+                return new ResponseEntity(new ResponseMessage("no"), HttpStatus.OK);
+            } else{
+                user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Fount with -> username:"+username));
+                user.setAvatar(changeAvatar.getAvatar());
+                userService.save(user);
+
+            }
+            return new ResponseEntity(new ResponseMessage("yes"), HttpStatus.OK);
+        } catch (UsernameNotFoundException exception){
+            return new ResponseEntity<>(new ResponseMessage(exception.getMessage()), HttpStatus.NOT_FOUND);
+        }
+    }
+    @PutMapping("/update-profile")
+    public ResponseEntity<?> updateProfile(HttpServletRequest httpServletRequest, @Valid @RequestBody ChangeProfileForm changeProfile) {
+        String jwt = jwtAuthTokenFilter.getJwt(httpServletRequest);
+        String username = jwtProvider.getUserNameFromJwtToken(jwt);
+        User user;
+        try {
+            user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with -> username:" + username));
+            if (userService.existsByUsername(changeProfile.getUsername())) {
+                return new ResponseEntity(new ResponseMessage("nouser"), HttpStatus.OK);
+            } else if(userService.existsByEmail(changeProfile.getEmail())){
+                return new ResponseEntity(new ResponseMessage("noemail"), HttpStatus.OK);
+            } else {
+                user.setName(changeProfile.getName());
+//                user.setAvatar(changeProfile.getAvatar());
+                user.setUsername(changeProfile.getUsername());
+                user.setEmail(changeProfile.getEmail());
+                userService.save(user);
+            }
+            return new ResponseEntity(new ResponseMessage("yes"), HttpStatus.OK);
+
+        } catch (UsernameNotFoundException exception) {
+            return new ResponseEntity<>(new ResponseMessage(exception.getMessage()), HttpStatus.NOT_FOUND);
+        }
 
     }
 
