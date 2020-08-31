@@ -8,9 +8,12 @@ import com.codegym.wbdlaptop.model.RoleName;
 import com.codegym.wbdlaptop.model.User;
 import com.codegym.wbdlaptop.security.jwt.JwtAuthTokenFilter;
 import com.codegym.wbdlaptop.security.jwt.JwtProvider;
+import com.codegym.wbdlaptop.security.service.UserDetailsServiceImpl;
 import com.codegym.wbdlaptop.security.service.UserPrinciple;
 import com.codegym.wbdlaptop.service.IRoleService;
 import com.codegym.wbdlaptop.service.IUserService;
+import com.codegym.wbdlaptop.service.Impl.UserServiceImpl;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +42,7 @@ public class AuthRestAPIs {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    IUserService userService;
+    UserServiceImpl userService;
 
     @Autowired
     IRoleService roleService;
@@ -51,6 +54,8 @@ public class AuthRestAPIs {
     JwtProvider jwtProvider;
     @Autowired
     JwtAuthTokenFilter jwtAuthTokenFilter;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
@@ -160,30 +165,31 @@ public class AuthRestAPIs {
         }
     }
     @PutMapping("/update-profile")
-    public ResponseEntity<?> updateProfile(HttpServletRequest httpServletRequest, @Valid @RequestBody ChangeProfileForm changeProfile) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("profile.txt"));
-        writer.newLine();
-
+    public ResponseEntity<?> updateProfile(HttpServletRequest httpServletRequest, @Valid @RequestBody ChangeProfileForm changeProfile){
+//        BufferedWriter writer = new BufferedWriter(new FileWriter("profile.txt"));
+//        writer.newLine();
         String jwt = jwtAuthTokenFilter.getJwt(httpServletRequest);
         String username = jwtProvider.getUserNameFromJwtToken(jwt);
         User user;
+
         try {
-            user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with -> username:" + username));
+
             if (userService.existsByUsername(changeProfile.getUsername())) {
-                writer.write("vao user"+changeProfile.getUsername());
+
                 return new ResponseEntity(new ResponseMessage("nouser"), HttpStatus.OK);
             }
             if(userService.existsByEmail(changeProfile.getEmail())){
                 return new ResponseEntity(new ResponseMessage("noemail"), HttpStatus.OK);
             }
-
+//          User user = userDetailsService.getCurrentUser();
+            user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Fount with -> username:"+username));
                 user.setName(changeProfile.getName());
 //                user.setAvatar(changeProfile.getAvatar());
                 user.setUsername(changeProfile.getUsername());
                 user.setEmail(changeProfile.getEmail());
                 userService.save(user);
-                writer.close();
-            return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
+//            return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
+         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
 
         } catch (UsernameNotFoundException exception) {
             return new ResponseEntity<>(new ResponseMessage("excetion"), HttpStatus.OK);

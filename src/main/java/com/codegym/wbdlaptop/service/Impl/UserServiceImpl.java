@@ -2,6 +2,7 @@ package com.codegym.wbdlaptop.service.Impl;
 
 import com.codegym.wbdlaptop.model.User;
 import com.codegym.wbdlaptop.repository.IUserRepository;
+import com.codegym.wbdlaptop.security.service.UserDetailsServiceImpl;
 import com.codegym.wbdlaptop.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import java.util.Optional;
 public class UserServiceImpl implements IUserService {
     @Autowired
     private IUserRepository repository;
+
     @Override
     public Optional<User> findByUsername(String username) {
         return repository.findByUsername(username);
@@ -32,9 +34,10 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void save(User user) {
-        repository.save(user);
+    public User save(User user) {
+        return repository.save(user);
     }
+
 
     @Override
     public Iterable<User> findAll() {
