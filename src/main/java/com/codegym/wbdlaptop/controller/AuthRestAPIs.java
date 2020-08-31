@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -157,13 +160,17 @@ public class AuthRestAPIs {
         }
     }
     @PutMapping("/update-profile")
-    public ResponseEntity<?> updateProfile(HttpServletRequest httpServletRequest, @Valid @RequestBody ChangeProfileForm changeProfile) {
+    public ResponseEntity<?> updateProfile(HttpServletRequest httpServletRequest, @Valid @RequestBody ChangeProfileForm changeProfile) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("profile.txt"));
+        writer.newLine();
+
         String jwt = jwtAuthTokenFilter.getJwt(httpServletRequest);
         String username = jwtProvider.getUserNameFromJwtToken(jwt);
         User user;
         try {
             user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with -> username:" + username));
             if (userService.existsByUsername(changeProfile.getUsername())) {
+                writer.write("vao user"+changeProfile.getUsername());
                 return new ResponseEntity(new ResponseMessage("nouser"), HttpStatus.OK);
             }
             if(userService.existsByEmail(changeProfile.getEmail())){
@@ -175,6 +182,7 @@ public class AuthRestAPIs {
                 user.setUsername(changeProfile.getUsername());
                 user.setEmail(changeProfile.getEmail());
                 userService.save(user);
+                writer.close();
             return new ResponseEntity(new ResponseMessage("yes"), HttpStatus.OK);
 
         } catch (UsernameNotFoundException exception) {
