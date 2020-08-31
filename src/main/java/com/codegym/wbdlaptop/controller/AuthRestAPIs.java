@@ -165,15 +165,16 @@ public class AuthRestAPIs {
             user = userService.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found with -> username:" + username));
             if (userService.existsByUsername(changeProfile.getUsername())) {
                 return new ResponseEntity(new ResponseMessage("nouser"), HttpStatus.OK);
-            } else if(userService.existsByEmail(changeProfile.getEmail())){
+            }
+            if(userService.existsByEmail(changeProfile.getEmail())){
                 return new ResponseEntity(new ResponseMessage("noemail"), HttpStatus.OK);
-            } else {
+            }
+
                 user.setName(changeProfile.getName());
 //                user.setAvatar(changeProfile.getAvatar());
                 user.setUsername(changeProfile.getUsername());
                 user.setEmail(changeProfile.getEmail());
                 userService.save(user);
-            }
             return new ResponseEntity(new ResponseMessage("yes"), HttpStatus.OK);
 
         } catch (UsernameNotFoundException exception) {
