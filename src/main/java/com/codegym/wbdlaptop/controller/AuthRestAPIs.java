@@ -1,5 +1,6 @@
 package com.codegym.wbdlaptop.controller;
 
+import com.codegym.wbdlaptop.message.request.ChangePasswordForm;
 import com.codegym.wbdlaptop.message.request.LoginForm;
 import com.codegym.wbdlaptop.message.request.SignUpForm;
 import com.codegym.wbdlaptop.message.response.JwtResponse;
@@ -7,6 +8,7 @@ import com.codegym.wbdlaptop.message.response.ResponseMessage;
 import com.codegym.wbdlaptop.model.Role;
 import com.codegym.wbdlaptop.model.RoleName;
 import com.codegym.wbdlaptop.model.User;
+import com.codegym.wbdlaptop.security.jwt.JwtAuthTokenFilter;
 import com.codegym.wbdlaptop.security.jwt.JwtProvider;
 import com.codegym.wbdlaptop.security.service.UserPrinciple;
 import com.codegym.wbdlaptop.service.IRoleService;
@@ -18,9 +20,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Optional;
@@ -44,6 +48,8 @@ public class AuthRestAPIs {
 
     @Autowired
     JwtProvider jwtProvider;
+    @Autowired
+    JwtAuthTokenFilter jwtAuthTokenFilter;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
@@ -106,6 +112,32 @@ public class AuthRestAPIs {
         userService.save(user);
 
         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
+    }
+    @PutMapping("/change-password")
+    public ResponseEntity<?> changePassword(HttpServletRequest request, @Valid @RequestBody ChangePasswordForm changePasswordForm) {
+        String jwt = jwtAuthTokenFilter.getJwt(request);
+        String username = jwtProvider.getUserNameFromJwtToken(jwt);
+        User user;
+        try {
+            user = userService
+                    .findByUsername(username)
+                    .orElseThrow(
+                            () -> new UsernameNotFoundException("User Not Found with -> username:" + username));
+            boolean matches = passwordEncoder.matches(changePasswordForm.getCurrentPassword(), user.getPassword());
+            if (changePasswordForm.getNewPassword() != null) {
+                if (matches) {
+                    user.setPassword(passwordEncoder.encode(changePasswordForm.getNewPassword()));
+                    userService.save(user);
+                } else {
+                    return new ResponseEntity(new ResponseMessage("no"), HttpStatus.OK);
+                }
+            }
+            return new ResponseEntity(new ResponseMessage("yes"), HttpStatus.OK);
+        } catch (UsernameNotFoundException exception) {
+            return new ResponseEntity<>(new ResponseMessage(exception.getMessage()), HttpStatus.NOT_FOUND);
+        }
+
+
     }
 
 //    @PutMapping("/update-profile/{id}")
