@@ -1,5 +1,7 @@
 package com.codegym.wbdlaptop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class Playlist {
     private String nameBand;
     @ManyToOne
     User user;
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "player_song",
     joinColumns = @JoinColumn(name = "playlist_id"),
