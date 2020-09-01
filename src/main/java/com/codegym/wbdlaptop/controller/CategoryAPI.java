@@ -61,4 +61,21 @@ public class CategoryAPI {
         categoryService.delete(id);
         return new ResponseEntity<>(new ResponseMessage("yes"),HttpStatus.OK);
     }
+    @PutMapping("/category/{id}")
+    public ResponseEntity<?> updateCategory(@PathVariable Long id, @Valid @RequestBody Category category){
+        Optional<Category> category1 = categoryService.findById(id);
+        if(!category1.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if(categoryService.existsByNameCategory(category.getNameCategory())){
+            return new ResponseEntity<>(new ResponseMessage("nocategory"),HttpStatus.OK);
+        }
+        if(category.getNameCategory()==null||category.getNameCategory()==""){
+            return new ResponseEntity<>(new ResponseMessage("noname"), HttpStatus.OK);
+        }
+        category1.get().setNameCategory(category.getNameCategory());
+        category1.get().setAvatarCategory(category.getAvatarCategory());
+        categoryService.save(category1.get());
+        return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
+    }
 }
