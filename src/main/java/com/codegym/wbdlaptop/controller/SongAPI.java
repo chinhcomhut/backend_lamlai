@@ -99,5 +99,14 @@ public class SongAPI {
         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
 
     }
+    @DeleteMapping("/song/{id}")
+    public ResponseEntity<?> deleteSong(@PathVariable Long id){
+        Optional<Song> song = songService.findById(id);
+        if(!song.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        songService.delete(id);
+        return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
+    }
 
 }
