@@ -11,8 +11,10 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sun.awt.geom.AreaOp;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -41,5 +43,22 @@ public class CategoryAPI {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(categories,HttpStatus.OK);
+    }
+    @GetMapping("/category/{id}")
+    public ResponseEntity<?> getCategoryById(@PathVariable Long id){
+        Optional<Category> category = categoryService.findById(id);
+        if(!category.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(category,HttpStatus.OK);
+    }
+    @DeleteMapping("/category/{id}")
+    public ResponseEntity<?> deleteCategory(@PathVariable Long id){
+        Optional<Category> category = categoryService.findById(id);
+        if(!category.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        categoryService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
