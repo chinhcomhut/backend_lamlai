@@ -59,6 +59,6 @@ public class CategoryAPI {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         categoryService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseMessage("yes"),HttpStatus.OK);
     }
 }
