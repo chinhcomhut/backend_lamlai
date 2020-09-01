@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import sun.awt.geom.AreaOp;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*")
@@ -77,5 +78,13 @@ public class CategoryAPI {
         category1.get().setAvatarCategory(category.getAvatarCategory());
         categoryService.save(category1.get());
         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
+    }
+    @GetMapping("/list-category")
+    public ResponseEntity<?> listCategory(){
+        List<Category> categories = categoryService.findAllList();
+        if(categories.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(categories,HttpStatus.OK);
     }
 }
