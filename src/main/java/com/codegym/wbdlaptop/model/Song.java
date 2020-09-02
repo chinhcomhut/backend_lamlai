@@ -1,6 +1,9 @@
 package com.codegym.wbdlaptop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "song")
@@ -22,6 +25,9 @@ public class Song {
     private int listenSong;
     @ManyToOne
     User user;
+    @JsonBackReference
+    @ManyToMany
+    private List<Playlist> playlists;
 
     public Song() {
     }
