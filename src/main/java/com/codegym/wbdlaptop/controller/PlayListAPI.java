@@ -53,4 +53,21 @@ public class PlayListAPI {
         }
         return new ResponseEntity<>(playlist, HttpStatus.OK);
     }
+    @PutMapping("/playlist/{id}")
+    public ResponseEntity<?> updatePlayListById(@PathVariable Long id, @Valid @RequestBody Playlist playlist){
+        Optional<Playlist> playlist1 = playListService.findById(id);
+        if(!playlist1.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if(playlist.getNamePlayList()==null||playlist.getNamePlayList()==""){
+            return new ResponseEntity<>(new ResponseMessage("noname"), HttpStatus.OK);
+        }
+        playListService.save(playlist1.get());
+        return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
+    }
+    @PutMapping("/playlist")
+    public ResponseEntity<?> updatePlayList(@RequestBody Playlist playlist){
+        playListService.save(playlist);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 }
