@@ -69,7 +69,7 @@ public class PlayListAPI {
     }
     @PutMapping("/playlist")
     public ResponseEntity<?> updatePlayList(@RequestBody Playlist playlist){
-        playlist.setSongList(playlist.getSongList());
+//        playlist.setSongList(playlist.getSongList());
         playListService.save(playlist);
         return new ResponseEntity<>(playlist,HttpStatus.CREATED);
     }

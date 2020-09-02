@@ -1,11 +1,6 @@
 package com.codegym.wbdlaptop.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,15 +16,22 @@ public class Playlist {
     private String nameSinger;
     private String nameCategory;
     private String nameBand;
+
     @ManyToOne
     User user;
-//    @JsonIgnore
-    @JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToMany
     @JoinTable(name = "player_song",
     joinColumns = @JoinColumn(name = "playlist_id"),
     inverseJoinColumns = @JoinColumn(name = "song_id"))
-    private List<Song> songList = new ArrayList<>();
+    private  List<Song> songList;
+//    @JsonIgnore
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "player_song",
+//    joinColumns = @JoinColumn(name = "playlist_id"),
+//    inverseJoinColumns = @JoinColumn(name = "song_id"))
+//    private List<Song> songList = new ArrayList<>();
+//    public Playlist() {
+//    }
 
     public Playlist() {
     }

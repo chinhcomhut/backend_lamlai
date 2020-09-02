@@ -22,10 +22,10 @@ public class PlayListServiceImpl implements IPlayService {
         return playListRepository.findAllByUserId(userId,pageable);
     }
 
-    @Override
-    public Page<Playlist> findByNameAlbumContaining(String nameAlbum, Pageable pageable) {
-        return playListRepository.findByNameAlbumContaining(nameAlbum,pageable);
-    }
+//    @Override
+//    public Page<Playlist> findByNameAlbumContaining(String nameAlbum, Pageable pageable) {
+//        return playListRepository.findByNameAlbumContaining(nameAlbum,pageable);
+//    }
 
     @Override
     public Playlist save(Playlist playlist) {

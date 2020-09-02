@@ -1,8 +1,10 @@
 package com.codegym.wbdlaptop.controller;
 
 import com.codegym.wbdlaptop.message.response.ResponseMessage;
+import com.codegym.wbdlaptop.model.Playlist;
 import com.codegym.wbdlaptop.model.Singer;
 import com.codegym.wbdlaptop.model.Song;
+import com.codegym.wbdlaptop.service.Impl.PlayListServiceImpl;
 import com.codegym.wbdlaptop.service.Impl.SongServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,8 @@ import java.util.Optional;
 public class SongAPI {
     @Autowired
     private SongServiceImpl songService;
+    @Autowired
+    private PlayListServiceImpl playListService;
     @GetMapping("/song")
     public ResponseEntity<?> pageSong(@PageableDefault(sort = "nameSong", direction = Sort.Direction.ASC)Pageable pageable){
         Page<Song> songPage = songService.findAll(pageable);
@@ -107,6 +111,24 @@ public class SongAPI {
         }
         songService.delete(id);
         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
+    }
+//    @GetMapping("/song-by-playlist/{id}")
+//       public ResponseEntity songByPlayListId(@PathVariable Long id){
+//        Optional<Playlist> playlist = playListService.findById(id);
+//        List<Song> songs = songService.findAllByPlaylistId(playlist.get().getId());
+//        return new ResponseEntity(songs, HttpStatus.OK);
+//    }
+//    @PutMapping("/add-song-by-playlist/{id}")
+//    public ResponseEntity<?> updateSong(@PathVariable Long id,@Valid @RequestBody Song song){
+//        Optional<Playlist> playlist = playListService.findById(id);
+//        song.setPlaylist(playlist.get());
+//        songService.save(song);
+//        return new ResponseEntity<>(song, HttpStatus.CREATED);
+//    }
+    @PutMapping("/song")
+    public ResponseEntity<?> updateSong(@RequestBody Song song){
+        songService.save(song);
+        return new ResponseEntity<>(song, HttpStatus.CREATED);
     }
 
 }

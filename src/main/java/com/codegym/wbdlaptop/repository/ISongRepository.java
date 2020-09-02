@@ -16,4 +16,5 @@ public interface ISongRepository extends JpaRepository<Song, Long> {
     Page<Song> findByNameBandContaining(String nameBand, Pageable pageable);
     Page<Song> findByNameCategoryContaining(String nameCategory, Pageable pageable);
     List<Song> findByNameSongContaining(String nameSong);
+//    List<Song> findAllByPlaylistId(Long playListId);
 }

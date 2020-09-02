@@ -19,4 +19,5 @@ public interface ISongService {
     Optional<Song> findById(Long id);
     Page<Song> findAll(Pageable pageable);
     List<Song> findAll();
+//    List<Song> findAllByPlaylistId(Long playListId);
 }

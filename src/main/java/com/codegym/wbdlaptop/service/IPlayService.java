@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface IPlayService {
     Page<Playlist> findAllByUserId(Long userId, Pageable pageable);
-    Page<Playlist> findByNameAlbumContaining(String nameAlbum, Pageable pageable);
+//    Page<Playlist> findByNameAlbumContaining(String nameAlbum, Pageable pageable);
     Playlist save(Playlist playlist);
     void delete(Long id);
     Optional<Playlist> findById(Long id);

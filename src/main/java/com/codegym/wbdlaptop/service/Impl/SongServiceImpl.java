@@ -74,4 +74,11 @@ public class SongServiceImpl implements ISongService {
     public List<Song> findAll() {
         return songRepository.findAll();
     }
+
+//    @Override
+//    public List<Song> findAllByPlaylistId(Long playListId) {
+//        return songRepository.findAllByPlaylistId(playListId);
+//    }
+
+
 }
