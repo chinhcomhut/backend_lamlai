@@ -1,5 +1,7 @@
 package com.codegym.wbdlaptop.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class Playlist {
 
     @ManyToOne
     User user;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany
     @JoinTable(name = "player_song",
     joinColumns = @JoinColumn(name = "playlist_id"),
