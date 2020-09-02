@@ -1,6 +1,7 @@
 package com.codegym.wbdlaptop.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -22,8 +23,8 @@ public class Playlist {
 
     @ManyToOne
     User user;
-    @JsonFormat
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)//De the nay thi hien duoc page play list//
+    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)//De the nay thi hien duoc page play list//
     @OneToMany
     @JoinTable(name = "player_song",
     joinColumns = @JoinColumn(name = "playlist_id"),
