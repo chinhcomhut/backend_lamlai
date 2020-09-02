@@ -21,7 +21,7 @@ public class Playlist {
 
     @ManyToOne
     User user;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)//De the nay thi hien duoc page play list//
     @OneToMany
     @JoinTable(name = "player_song",
     joinColumns = @JoinColumn(name = "playlist_id"),
