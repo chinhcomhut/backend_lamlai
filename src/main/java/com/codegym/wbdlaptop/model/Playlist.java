@@ -3,6 +3,7 @@ package com.codegym.wbdlaptop.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,7 +26,7 @@ public class Playlist {
     @JoinTable(name = "player_song",
     joinColumns = @JoinColumn(name = "playlist_id"),
     inverseJoinColumns = @JoinColumn(name = "song_id"))
-    private List<Song> songList;
+    private List<Song> songList = new ArrayList<>();
 
     public Playlist() {
     }
