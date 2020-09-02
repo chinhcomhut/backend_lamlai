@@ -62,6 +62,8 @@ public class PlayListAPI {
         if(playlist.getNamePlayList()==null||playlist.getNamePlayList()==""){
             return new ResponseEntity<>(new ResponseMessage("noname"), HttpStatus.OK);
         }
+        playlist1.get().setNamePlayList(playlist.getNamePlayList());
+        playlist1.get().setAvatarPlayList(playlist.getAvatarPlayList());
         playListService.save(playlist1.get());
         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
     }
