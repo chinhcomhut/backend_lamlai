@@ -25,7 +25,7 @@ public class Playlist {
 
     @ManyToOne
     User user;
-//    @JsonIgnore
+    @JsonIgnore
 //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)//De the nay thi hien duoc page play list//
     @ManyToMany (fetch = FetchType.LAZY)
     @JoinTable(name = "player_song",
