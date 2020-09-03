@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "playlist")
+@Table()
 public class Playlist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

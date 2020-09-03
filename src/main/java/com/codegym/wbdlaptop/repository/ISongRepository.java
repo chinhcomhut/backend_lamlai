@@ -13,7 +13,7 @@ public interface ISongRepository extends JpaRepository<Song, Long> {
     Boolean existsByNameSong(String nameSong);
     Page<Song> findAllByUserId(Long userId, Pageable pageable);
     Page<Song> findByNameSingerContaining(String nameSinger, Pageable pageable);
-    Page<Song> findByNameBandContaining(String nameBand, Pageable pageable);
+//    Page<Song> findByNameBandContaining(String nameBand, Pageable pageable);
     Page<Song> findByNameCategoryContaining(String nameCategory, Pageable pageable);
     List<Song> findByNameSongContaining(String nameSong);
 //    List<Song> findAllByPlaylistId(Long playListId);

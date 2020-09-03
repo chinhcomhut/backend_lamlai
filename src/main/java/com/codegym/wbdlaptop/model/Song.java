@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "songs")
+@Table()
 public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,7 +12,7 @@ public interface ISongService {
     Page<Song> findAllByUserId(Long userId, Pageable pageable);
     List<Song> findByNameSongContaining(String nameSong);
     Page<Song> findByNameSingerContaining(String nameSinger, Pageable pageable);
-    Page<Song> findByNameBandContaining(String nameBand, Pageable pageable);
+//    Page<Song> findByNameBandContaining(String nameBand, Pageable pageable);
     Page<Song> findByNameCategoryContaining(String nameCategory, Pageable pageable);
     Song save(Song song);
     void delete(Long id);

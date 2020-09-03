@@ -38,10 +38,10 @@ public class SongServiceImpl implements ISongService {
         return songRepository.findByNameSingerContaining(nameSinger,pageable);
     }
 
-    @Override
-    public Page<Song> findByNameBandContaining(String nameBand, Pageable pageable) {
-        return songRepository.findByNameBandContaining(nameBand,pageable);
-    }
+//    @Override
+//    public Page<Song> findByNameBandContaining(String nameBand, Pageable pageable) {
+//        return songRepository.findByNameBandContaining(nameBand,pageable);
+//    }
 
     @Override
     public Page<Song> findByNameCategoryContaining(String nameCategory, Pageable pageable) {
