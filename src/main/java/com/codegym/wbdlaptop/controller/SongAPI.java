@@ -121,7 +121,7 @@ public class SongAPI {
     @PutMapping("/add-song-by-playlist/{id}")
     public ResponseEntity<?> updateSong(@PathVariable Long id,@Valid @RequestBody Song song){
         Optional<Playlist> playlist = playListService.findById(id);
-        song.setPlaylist((List<Playlist>) playlist.get());
+        song.setPlaylist(playlist.get());
         songService.save(song);
         return new ResponseEntity<>(song, HttpStatus.CREATED);
     }
