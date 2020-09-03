@@ -26,7 +26,10 @@ public class Playlist {
     @ManyToOne
     User user;
     @JsonIgnore
-    @OneToMany
+    @ManyToMany(mappedBy = "playlists",fetch = FetchType.LAZY)
+    @JoinTable(name = "player_song",
+    joinColumns = @JoinColumn(name = "playlist_id"),
+    inverseJoinColumns = @JoinColumn(name = "song_id"))
     private List<Song> songList;
 //    @JsonIgnore
 ////    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)//De the nay thi hien duoc page play list//

@@ -112,19 +112,19 @@ public class SongAPI {
         songService.delete(id);
         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
     }
-    @GetMapping("/song-by-playlist/{id}")
-       public ResponseEntity songByPlayListId(@PathVariable Long id){
-        Optional<Playlist> playlist = playListService.findById(id);
-        List<Song> songs = songService.findAllByPlaylistId(playlist.get().getId());
-        return new ResponseEntity(songs, HttpStatus.OK);
-    }
-    @PutMapping("/add-song-by-playlist/{id}")
-    public ResponseEntity<?> updateSong(@PathVariable Long id,@Valid @RequestBody Song song){
-        Optional<Playlist> playlist = playListService.findById(id);
-        song.setPlaylist(playlist.get());
-        songService.save(song);
-        return new ResponseEntity<>(song, HttpStatus.CREATED);
-    }
+//    @GetMapping("/song-by-playlist/{id}")
+//       public ResponseEntity songByPlayListId(@PathVariable Long id){
+//        Optional<Playlist> playlist = playListService.findById(id);
+//        List<Song> songs = songService.findAllByPlaylistId(playlist.get().getId());
+//        return new ResponseEntity(songs, HttpStatus.OK);
+//    }
+//    @PutMapping("/add-song-by-playlist/{id}")
+//    public ResponseEntity<?> updateSong(@PathVariable Long id,@Valid @RequestBody Song song){
+//        Optional<Playlist> playlist = playListService.findById(id);
+//        song.setPlaylist(playlist.get());
+//        songService.save(song);
+//        return new ResponseEntity<>(song, HttpStatus.CREATED);
+//    }
     @PutMapping("/song")
     public ResponseEntity<?> updateSong(@RequestBody Song song){
         songService.save(song);

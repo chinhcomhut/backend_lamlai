@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "song")
+@Table(name = "songs")
 public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,15 +34,12 @@ public class Song {
 //    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "songList")
 //    private Set<Playlist> playlists = new HashSet<>();
     @JsonIgnore
-    @ManyToOne
-    @JoinTable(name = "song_player",
-    joinColumns = @JoinColumn(name = "song_id"),
-    inverseJoinColumns = @JoinColumn(name = "playlist_id"))
-    Playlist playlist;
+    @ManyToMany(mappedBy = "songList",fetch = FetchType.LAZY)
+    private List<Playlist> playlists;
     public Song() {
     }
 
-    public Song(Long id, String nameSong, String nameSinger, String nameBand, String nameCategory, String avatarSong, String createBy, String namePlayList, String mp3Url, String lyrics, int likeSong, int listenSong, User user, Playlist playlist) {
+    public Song(Long id, String nameSong, String nameSinger, String nameBand, String nameCategory, String avatarSong, String createBy, String namePlayList, String mp3Url, String lyrics, int likeSong, int listenSong, User user, List<Playlist> playlists) {
         this.id = id;
         this.nameSong = nameSong;
         this.nameSinger = nameSinger;
@@ -56,7 +53,7 @@ public class Song {
         this.likeSong = likeSong;
         this.listenSong = listenSong;
         this.user = user;
-        this.playlist = playlist;
+        this.playlists = playlists;
     }
 
     public Long getId() {
@@ -163,11 +160,11 @@ public class Song {
         this.user = user;
     }
 
-    public Playlist getPlaylist() {
-        return playlist;
+    public List<Playlist> getPlaylist() {
+        return playlists;
     }
 
-    public void setPlaylist(Playlist playlist) {
-        this.playlist = playlist;
+    public void setPlaylist(List<Playlist> playlist) {
+        this.playlists = playlist;
     }
 }
