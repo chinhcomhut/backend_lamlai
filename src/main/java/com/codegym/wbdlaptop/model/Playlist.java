@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table()
+@Table(name = "playlist")
 public class Playlist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -134,11 +134,11 @@ public class Playlist {
     public void setUser(User user) {
         this.user = user;
     }
-//    @JsonIgnore
+
     public List<Song> getSongList() {
         return songList;
     }
-//    @JsonIgnore
+
     public void setSongList(List<Song> songList) {
         this.songList = songList;
     }
