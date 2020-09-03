@@ -33,7 +33,7 @@ public class Song {
     User user;
 //    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "songList")
 //    private Set<Playlist> playlists = new HashSet<>();
-
+    @JsonIgnore
     @ManyToOne
     @JoinTable(name = "song_player",
     joinColumns = @JoinColumn(name = "song_id"),
