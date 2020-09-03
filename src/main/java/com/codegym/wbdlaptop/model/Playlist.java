@@ -25,6 +25,7 @@ public class Playlist {
 
     @ManyToOne
     User user;
+    @JsonIgnore
     @OneToMany
     private List<Song> songList;
 //    @JsonIgnore
