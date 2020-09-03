@@ -25,13 +25,15 @@ public class Playlist {
 
     @ManyToOne
     User user;
-    @JsonIgnore
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)//De the nay thi hien duoc page play list//
-    @ManyToMany (fetch = FetchType.LAZY)
-    @JoinTable(name = "player_song",
-    joinColumns = @JoinColumn(name = "playlist_id"),
-    inverseJoinColumns = @JoinColumn(name = "song_id"))
-    private Set<Song> songList = new HashSet<>();
+    @OneToMany
+    private List<Song> songList;
+//    @JsonIgnore
+////    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)//De the nay thi hien duoc page play list//
+//    @ManyToMany (fetch = FetchType.LAZY)
+//    @JoinTable(name = "player_song",
+//    joinColumns = @JoinColumn(name = "playlist_id"),
+//    inverseJoinColumns = @JoinColumn(name = "song_id"))
+//    private Set<Song> songList = new HashSet<>();
 //    @JsonIgnore
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinTable(name = "player_song",
@@ -44,7 +46,7 @@ public class Playlist {
     public Playlist() {
     }
 
-    public Playlist(Long id, String namePlayList, String avatarPlayList, String createBy, String nameAlbum, String nameSinger, String nameCategory, String nameBand, User user, Set<Song> songList) {
+    public Playlist(Long id, String namePlayList, String avatarPlayList, String createBy, String nameAlbum, String nameSinger, String nameCategory, String nameBand, User user, List<Song> songList) {
         this.id = id;
         this.namePlayList = namePlayList;
         this.avatarPlayList = avatarPlayList;
@@ -129,11 +131,11 @@ public class Playlist {
         this.user = user;
     }
 //    @JsonIgnore
-    public Set<Song> getSongList() {
+    public List<Song> getSongList() {
         return songList;
     }
 //    @JsonIgnore
-    public void setSongList(Set<Song> songList) {
+    public void setSongList(List<Song> songList) {
         this.songList = songList;
     }
 }

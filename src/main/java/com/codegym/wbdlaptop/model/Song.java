@@ -34,15 +34,15 @@ public class Song {
 //    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "songList")
 //    private Set<Playlist> playlists = new HashSet<>();
 
-//    @ManyToOne
-//    @JoinTable(name = "song_player",
-//    joinColumns = @JoinColumn(name = "song_id"),
-//    inverseJoinColumns = @JoinColumn(name = "playlist_id"))
-//    Playlist playlist;
+    @ManyToOne
+    @JoinTable(name = "song_player",
+    joinColumns = @JoinColumn(name = "song_id"),
+    inverseJoinColumns = @JoinColumn(name = "playlist_id"))
+    Playlist playlist;
     public Song() {
     }
 
-    public Song(Long id, String nameSong, String nameSinger, String nameBand, String nameCategory, String avatarSong, String createBy, String namePlayList, String mp3Url, String lyrics, int likeSong, int listenSong, User user) {
+    public Song(Long id, String nameSong, String nameSinger, String nameBand, String nameCategory, String avatarSong, String createBy, String namePlayList, String mp3Url, String lyrics, int likeSong, int listenSong, User user, Playlist playlist) {
         this.id = id;
         this.nameSong = nameSong;
         this.nameSinger = nameSinger;
@@ -56,7 +56,7 @@ public class Song {
         this.likeSong = likeSong;
         this.listenSong = listenSong;
         this.user = user;
-//        this.playlists = playlists;
+        this.playlist = playlist;
     }
 
     public Long getId() {
@@ -163,11 +163,11 @@ public class Song {
         this.user = user;
     }
 
-//    public Set<Playlist> getPlaylist() {
-//        return playlists;
-//    }
-//
-//    public void setPlaylist(Set<Playlist> playlists) {
-//        this.playlists = playlists;
-//    }
+    public Playlist getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(Playlist playlist) {
+        this.playlist = playlist;
+    }
 }
