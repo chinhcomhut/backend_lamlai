@@ -76,7 +76,7 @@ public class PlayListAPI {
     public ResponseEntity<?> updatePlayList(@PathVariable Long id,@Valid @RequestBody Song song){
         Optional<Playlist> playlist = playListService.findById(id);
         Optional<Song> song1 = songService.findById(song.getId());
-        playlist.get().setSongList((Set<Song>) song);
+        playlist.get().setSongList((Set<Song>) song1.get());
 //        playlist.setSongList(playlist.getSongList());
         playListService.save(playlist.get());
         return new ResponseEntity<>(playlist,HttpStatus.CREATED);
