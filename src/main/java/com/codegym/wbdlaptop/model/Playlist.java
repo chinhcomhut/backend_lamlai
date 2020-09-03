@@ -128,11 +128,11 @@ public class Playlist {
     public void setUser(User user) {
         this.user = user;
     }
-
+    @JsonIgnore
     public Set<Song> getSongList() {
         return songList;
     }
-
+    @JsonIgnore
     public void setSongList(Set<Song> songList) {
         this.songList = songList;
     }
