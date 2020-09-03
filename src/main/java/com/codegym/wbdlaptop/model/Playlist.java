@@ -25,12 +25,12 @@ public class Playlist {
 
     @ManyToOne
     User user;
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "player_song",
-    joinColumns = @JoinColumn(name = "playlist_id"),
-    inverseJoinColumns = @JoinColumn(name = "song_id"))
-    private List<Song> songList;
+//    @JsonIgnore
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "player_song",
+//    joinColumns = @JoinColumn(name = "playlist_id"),
+//    inverseJoinColumns = @JoinColumn(name = "song_id"))
+//    private List<Song> songList;
 //    @JsonIgnore
 ////    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)//De the nay thi hien duoc page play list//
 //    @ManyToMany (fetch = FetchType.LAZY)
@@ -50,7 +50,7 @@ public class Playlist {
     public Playlist() {
     }
 
-    public Playlist(Long id, String namePlayList, String avatarPlayList, String createBy, String nameAlbum, String nameSinger, String nameCategory, String nameBand, User user, List<Song> songList) {
+    public Playlist(Long id, String namePlayList, String avatarPlayList, String createBy, String nameAlbum, String nameSinger, String nameCategory, String nameBand, User user) {
         this.id = id;
         this.namePlayList = namePlayList;
         this.avatarPlayList = avatarPlayList;
@@ -60,7 +60,7 @@ public class Playlist {
         this.nameCategory = nameCategory;
         this.nameBand = nameBand;
         this.user = user;
-        this.songList = songList;
+//        this.songList = songList;
     }
 
     public Long getId() {
@@ -135,11 +135,11 @@ public class Playlist {
         this.user = user;
     }
 
-    public List<Song> getSongList() {
-        return songList;
-    }
-
-    public void setSongList(List<Song> songList) {
-        this.songList = songList;
-    }
+//    public List<Song> getSongList() {
+//        return songList;
+//    }
+//
+//    public void setSongList(List<Song> songList) {
+//        this.songList = songList;
+//    }
 }
