@@ -2,9 +2,13 @@ package com.codegym.wbdlaptop.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "song")
@@ -27,6 +31,9 @@ public class Song {
     private int listenSong;
     @ManyToOne
     User user;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "songList")
+    private Set<Playlist> playlists = new HashSet<>();
+
 //    @ManyToOne
 //    @JoinTable(name = "song_player",
 //    joinColumns = @JoinColumn(name = "song_id"),
@@ -35,7 +42,7 @@ public class Song {
     public Song() {
     }
 
-    public Song(Long id, String nameSong, String nameSinger, String nameBand, String nameCategory, String avatarSong, String createBy, String namePlayList, String mp3Url, String lyrics, int likeSong, int listenSong, User user) {
+    public Song(Long id, String nameSong, String nameSinger, String nameBand, String nameCategory, String avatarSong, String createBy, String namePlayList, String mp3Url, String lyrics, int likeSong, int listenSong, User user, Set<Playlist> playlists) {
         this.id = id;
         this.nameSong = nameSong;
         this.nameSinger = nameSinger;
@@ -49,16 +56,8 @@ public class Song {
         this.likeSong = likeSong;
         this.listenSong = listenSong;
         this.user = user;
-//        this.playlist = playlist;
+        this.playlists = playlists;
     }
-//
-//    public Playlist getPlaylist() {
-//        return playlist;
-//    }
-//
-//    public void setPlaylist(Playlist playlist) {
-//        this.playlist = playlist;
-//    }
 
     public Long getId() {
         return id;
@@ -162,5 +161,13 @@ public class Song {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<Playlist> getPlaylist() {
+        return playlists;
+    }
+
+    public void setPlaylist(Set<Playlist> playlists) {
+        this.playlists = playlists;
     }
 }

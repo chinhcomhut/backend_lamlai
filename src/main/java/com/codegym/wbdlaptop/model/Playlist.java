@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "playlist")
@@ -23,13 +25,13 @@ public class Playlist {
 
     @ManyToOne
     User user;
-    @JsonIgnore
+//    @JsonIgnore
 //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)//De the nay thi hien duoc page play list//
-    @OneToMany
+    @ManyToMany (mappedBy = "playlists", fetch = FetchType.LAZY)
     @JoinTable(name = "player_song",
     joinColumns = @JoinColumn(name = "playlist_id"),
     inverseJoinColumns = @JoinColumn(name = "song_id"))
-    private  List<Song> songList;
+    private Set<Song> songList = new HashSet<>();
 //    @JsonIgnore
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinTable(name = "player_song",
@@ -42,7 +44,7 @@ public class Playlist {
     public Playlist() {
     }
 
-    public Playlist(Long id, String namePlayList, String avatarPlayList, String createBy, String nameAlbum, String nameSinger, String nameCategory, String nameBand, User user, List<Song> songList) {
+    public Playlist(Long id, String namePlayList, String avatarPlayList, String createBy, String nameAlbum, String nameSinger, String nameCategory, String nameBand, User user, Set<Song> songList) {
         this.id = id;
         this.namePlayList = namePlayList;
         this.avatarPlayList = avatarPlayList;
@@ -127,11 +129,11 @@ public class Playlist {
         this.user = user;
     }
 
-    public List<Song> getSongList() {
+    public Set<Song> getSongList() {
         return songList;
     }
 
-    public void setSongList(List<Song> songList) {
+    public void setSongList(Set<Song> songList) {
         this.songList = songList;
     }
 }
