@@ -11,9 +11,7 @@ import com.codegym.wbdlaptop.security.jwt.JwtProvider;
 import com.codegym.wbdlaptop.security.service.UserDetailsServiceImpl;
 import com.codegym.wbdlaptop.security.service.UserPrinciple;
 import com.codegym.wbdlaptop.service.IRoleService;
-import com.codegym.wbdlaptop.service.IUserService;
 import com.codegym.wbdlaptop.service.Impl.UserServiceImpl;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +22,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 @CrossOrigin(origins = "*")

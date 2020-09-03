@@ -2,7 +2,7 @@ package com.codegym.wbdlaptop.controller;
 
 import com.codegym.wbdlaptop.message.response.ResponseMessage;
 import com.codegym.wbdlaptop.model.Playlist;
-import com.codegym.wbdlaptop.model.Song;
+
 import com.codegym.wbdlaptop.model.User;
 import com.codegym.wbdlaptop.security.service.UserDetailsServiceImpl;
 import com.codegym.wbdlaptop.service.Impl.PlayListServiceImpl;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Optional;
-import java.util.Set;
+
 
 @CrossOrigin(origins = "*")
 @RestController
