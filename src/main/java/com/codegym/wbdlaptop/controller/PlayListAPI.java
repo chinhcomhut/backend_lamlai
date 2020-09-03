@@ -2,9 +2,11 @@ package com.codegym.wbdlaptop.controller;
 
 import com.codegym.wbdlaptop.message.response.ResponseMessage;
 import com.codegym.wbdlaptop.model.Playlist;
+import com.codegym.wbdlaptop.model.Song;
 import com.codegym.wbdlaptop.model.User;
 import com.codegym.wbdlaptop.security.service.UserDetailsServiceImpl;
 import com.codegym.wbdlaptop.service.Impl.PlayListServiceImpl;
+import com.codegym.wbdlaptop.service.Impl.SongServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Optional;
+import java.util.Set;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -25,6 +28,8 @@ public class PlayListAPI {
     private PlayListServiceImpl playListService;
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    private SongServiceImpl songService;
     @PostMapping("/playlist")
     public ResponseEntity<?> createPlayList(@Valid @RequestBody Playlist playlist){
         if(playlist.getNamePlayList()==null||playlist.getNamePlayList()==""){
@@ -67,10 +72,13 @@ public class PlayListAPI {
         playListService.save(playlist1.get());
         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
     }
-    @PutMapping("/playlist")
-    public ResponseEntity<?> updatePlayList(@RequestBody Playlist playlist){
+    @PutMapping("/playlist/{id}")
+    public ResponseEntity<?> updatePlayList(@PathVariable Long id,@Valid @RequestBody Song song){
+        Optional<Playlist> playlist = playListService.findById(id);
+        Optional<Song> song1 = songService.findById(song.getId());
+        playlist.get().setSongList((Set<Song>) song);
 //        playlist.setSongList(playlist.getSongList());
-        playListService.save(playlist);
+        playListService.save(playlist.get());
         return new ResponseEntity<>(playlist,HttpStatus.CREATED);
     }
 
