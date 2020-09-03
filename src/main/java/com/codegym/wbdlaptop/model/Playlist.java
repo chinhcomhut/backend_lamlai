@@ -26,7 +26,7 @@ public class Playlist {
     @ManyToOne
     User user;
     @JsonIgnore
-    @ManyToMany(mappedBy = "playlists",fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "player_song",
     joinColumns = @JoinColumn(name = "playlist_id"),
     inverseJoinColumns = @JoinColumn(name = "song_id"))
